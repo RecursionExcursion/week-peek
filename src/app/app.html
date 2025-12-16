@@ -1,24 +1,27 @@
 <style>
+  h1{
+    font-size: 3rem;
+  }
+
   div {
     background-color: green;
   }
 
   button {
     cursor: pointer;
-    color: red;
   }
 </style>
 
 <main>
-  <div>{{ title() }}</div>
+  <h1 class="text-center">{{ title() }}</h1>
 
   <div class="flex justify-around">
-    <button (click)="weekBackward()">Back</button>
-    <button (click)="weekForward()">Forward</button>
+    <button class="rotate-180" (click)="weekBackward()"><big-arrow-right /></button>
+    <button (click)="weekForward()"><big-arrow-right /></button>
   </div>
 
   <div class="flex flex-col">
-    @for (day of week(); track day){
+    @for (day of week(); track day[0]){
     <day-card [week]="day"></day-card>
     }
   </div>

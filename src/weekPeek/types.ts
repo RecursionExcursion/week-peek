@@ -13,13 +13,14 @@ export type User = {
 export type Days = Record<number, Day>;
 
 export type Day = {
-  meals: {
-    breakfast: Meal;
-    lunch: Meal;
-    dinner: Meal;
-  };
+  meals: Meals;
 };
 
+export type Meals = {
+  breakfast: Meal;
+  lunch: Meal;
+  dinner: Meal;
+};
 export type Meal = string;
 
 type Item = {

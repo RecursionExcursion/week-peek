@@ -1,14 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DayCard } from '../components/daycard/day-card';
+import { DayCard } from '../components/dayCard/day-card';
 import { mockUser } from '../weekPeek/mock';
-import { dateService } from '../service/date-service';
-import { Day, User } from '../weekPeek/types';
 import { getWeek } from '../weekPeek/util';
+import { BigArrowRight } from '../components/icons/big-arrow-right';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, DayCard],
+  imports: [RouterOutlet, DayCard, BigArrowRight],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

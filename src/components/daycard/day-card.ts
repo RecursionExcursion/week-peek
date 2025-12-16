@@ -1,10 +1,12 @@
 import { Component, input } from '@angular/core';
 import { ClientDay } from '../../weekPeek/util';
+import { MealCard } from '../mealCard/meal-card';
 
 @Component({
   selector: 'day-card',
   standalone: true,
   templateUrl: './day-card.html',
+  imports: [MealCard],
 })
 export class DayCard {
   week = input.required<ClientDay | undefined>();
@@ -15,7 +17,7 @@ export class DayCard {
   }
 
   getMeals() {
-    if (this.week() === undefined) return '';
-    return JSON.stringify(this.week()![1]?.meals);
+    // if (this.week() === undefined) return '';
+    return this.week()![1]?.meals ?? undefined
   }
 }

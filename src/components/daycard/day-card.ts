@@ -13,11 +13,14 @@ export class DayCard {
 
   getDate() {
     if (this.week() === undefined) return '';
-    return new Date(this.week()![0]).toISOString();
+    return new Date(this.week()![0]).toLocaleDateString();
   }
 
   getMeals() {
-    // if (this.week() === undefined) return '';
-    return this.week()![1]?.meals ?? undefined
+    return this.week()![1]?.meals ?? undefined;
+  }
+
+  getRawDate() {
+    return this.week()?.[0] ?? 0;
   }
 }

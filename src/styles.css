@@ -1,3 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@theme {
+  /* Backgrounds */
+  --color-background: #f7f9fc; /* soft off-white */
+  --color-card: #ffffff; /* card background */
+
+  /* Accents */
+  --color-primary: #9fd4d2; /* soft blue */
+  --color-secondary: #34c759; /* healthy green */
+
+  /* Text */
+  --color-text-primary: #1f2937; /* near-black */
+  --color-text-secondary: #6b7280; /* muted gray */
+
+  /* UI */
+  --color-divider: #e5e7eb; /* subtle borders */
+}
+
+.card {
+  @apply bg-card rounded-lg border-divider border;
+}

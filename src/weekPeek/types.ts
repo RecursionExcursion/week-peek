@@ -1,4 +1,5 @@
 export type User = {
+  id: string;
   username: string;
   password: string;
   days: Days;
@@ -21,9 +22,10 @@ export type Meals = {
   lunch: Meal;
   dinner: Meal;
 };
-export type Meal = string;
+export type Meal = string[];
 
 type Item = {
+  id: string;
   name: string;
   timesUsed?: number;
   lastUsed?: number;

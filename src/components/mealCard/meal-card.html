@@ -1,5 +1,12 @@
-<div>
-  @if (meals()) { @for (m of getMeals(); track m[0]){
-  <div>{{ m[0] }} : {{ m[1] }}</div>
+<div class="flex justify-around p-2">
+  @if (meals()) { @for (m of formattedMeals(); track m[0]){
+  <div class="cursor-pointer" (click)="selectMeal(m[0], m[1])">
+    <div class="font-bold underline">
+      {{ m[0] }}
+    </div>
+    <div>
+      {{ m[1] }}
+    </div>
+  </div>
   } }
 </div>

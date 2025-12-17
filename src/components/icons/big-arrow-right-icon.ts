@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 
 @Component({
   selector: 'big-arrow-right',
@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
   template: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      [attr.height]="height()"
+      [attr.width]="width()"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -23,4 +23,7 @@ import { Component } from '@angular/core';
     </svg>
   `,
 })
-export class BigArrowRight {}
+export class BigArrowRight {
+  height= input.required<number>()
+  width= input.required<number>()
+}

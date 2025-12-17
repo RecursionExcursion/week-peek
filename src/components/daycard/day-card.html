@@ -1,4 +1,12 @@
-<div class="p-2 border-b-2 border-black">
-  <div>{{ getDate() }}</div>
-  <meal-card [meals]="getMeals()"></meal-card>
+<style>
+  h2 {
+    font-size: 1.3rem;
+  }
+</style>
+
+<div class="text-center card">
+  <div class="bg-primary">
+    <h2>{{ getDate() }}</h2>
+  </div>
+  <meal-card [date]="getRawDate()" [meals]="getMeals()"></meal-card>
 </div>

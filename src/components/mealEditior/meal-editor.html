@@ -1,0 +1,17 @@
+<div class="text-center card">
+  <div class="flex justify-end pr-5 pt-1">
+    <button class="cursor-pointer font-bold" (click)="close.emit()"><x-icon /></button>
+  </div>
+  <div class="font-bold text-2xl pt-5">{{ type() }} on {{ date() }}</div>
+  <div class="pt-5">
+    @for(m of meals(); track m){
+    <div class="flex justify-around">
+      {{ m }}
+      <div class="flex gap-2">
+        <pen-icon [height]="iconSize" [width]="iconSize" />
+        <x-icon [height]="iconSize" [width]="iconSize" />
+      </div>
+    </div>
+    }
+  </div>
+</div>

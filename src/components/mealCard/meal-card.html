@@ -1,12 +1,41 @@
+<style>
+  .meal-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    cursor: pointer;
+  }
+  .title {
+    font-size: 1.4rem;
+  }
+  .meals {
+    color: blue;
+  }
+</style>
+
 <div class="flex justify-around p-2">
-  @if (meals()) { @for (m of formattedMeals(); track m[0]){
-  <div class="cursor-pointer" (click)="selectMeal(m[0], m[1])">
-    <div class="font-bold underline">
-      {{ m[0] }}
-    </div>
-    <div>
-      {{ m[1] }}
+  <div class="meal-wrapper" (click)="select(`breakfast`)">
+    <span class="title">
+      {{ fm().breakfast.title }}
+    </span>
+    <div class="meals">
+      {{ fm().breakfast.meals }}
     </div>
   </div>
-  } }
+  <div class="meal-wrapper" (click)="select(`lunch`)">
+    <span class="title">
+      {{ fm().lunch.title }}
+    </span>
+    <div class="meals">
+      {{ fm().lunch.meals }}
+    </div>
+  </div>
+  <div class="meal-wrapper" (click)="select(`dinner`)">
+    <span class="title">
+      {{ fm().dinner.title }}
+    </span>
+    <div class="meals">
+      {{ fm().dinner.meals }}
+    </div>
+  </div>
 </div>

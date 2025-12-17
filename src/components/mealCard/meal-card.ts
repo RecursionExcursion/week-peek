@@ -10,20 +10,33 @@ import { MealSelectionService, MealType } from '../../injectors/meal-selection';
 export class MealCard {
   date = input.required<number>();
   meals = input.required<Meals | undefined>();
-  readonly formattedMeals = computed(() => {
+  readonly fm = computed(() => {
     const meals = this.meals();
-    if (!meals) return [];
 
-    return Object.entries(meals).map(([k, v]) => [k.toUpperCase(), v] as const);
+    return {
+      breakfast: {
+        title: 'Breakfast',
+        meals: meals?.breakfast ?? [],
+      },
+      lunch: {
+        title: 'Lunch',
+        meals: meals?.lunch ?? [],
+      },
+      dinner: {
+        title: 'Dinner',
+        meals: meals?.dinner ?? [],
+      },
+    };
   });
 
   constructor(private mealService: MealSelectionService) {}
 
-  selectMeal(type: string, meal: Meal) {
+  select(mealType: MealType) {
+    const meal = this.fm()[mealType];
     this.mealService.select({
       date: this.date(),
-      type: type as MealType,
-      meal: meal,
+      type: mealType,
+      meal: meal.meals,
     });
   }
 }

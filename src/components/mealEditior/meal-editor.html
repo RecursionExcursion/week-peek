@@ -8,10 +8,22 @@
     <div class="flex justify-around">
       {{ m }}
       <div class="flex gap-2">
-        <pen-icon [height]="iconSize" [width]="iconSize" />
-        <x-icon [height]="iconSize" [width]="iconSize" />
+        <button>
+          <pen-icon [height]="iconSize" [width]="iconSize" />
+        </button>
+        <button>
+          <x-icon [height]="iconSize" [width]="iconSize" />
+        </button>
+        <button>
+          <save-icon [height]="iconSize" [width]="iconSize" />
+        </button>
       </div>
     </div>
     }
+    <div>
+      <button class="text-secondary">
+        <add-icon />
+      </button>
+    </div>
   </div>
 </div>

@@ -2,12 +2,14 @@ import { Component, computed, input, output } from '@angular/core';
 import { MealSelectionService, SelectedMeal } from '../../injectors/meal-selection';
 import { PenIcon } from '../icons/pen-icon';
 import { XIcon } from '../icons/x-icon';
+import { SaveIcon } from '../icons/save-icon';
+import { AddIcon } from '../icons/add-icon';
 
 @Component({
   selector: 'meal-editor',
   standalone: true,
   templateUrl: './meal-editor.html',
-  imports: [PenIcon, XIcon],
+  imports: [PenIcon, XIcon, SaveIcon, AddIcon],
 })
 export class MealEditor {
   close = output<void>();
@@ -30,7 +32,7 @@ export class MealEditor {
     const mealServ = this.selectedMeal();
     if (!mealServ) return '';
     const t = mealServ.type;
-    return t[0] + t.slice(1).toLowerCase();
+    return t[0].toUpperCase() + t.slice(1).toLowerCase();
   });
 
   constructor(protected mealService: MealSelectionService) {}

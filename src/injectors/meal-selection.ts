@@ -1,7 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Meal } from '../weekPeek/types';
-
-export type MealType = 'breakfast' | 'lunch' | 'dinner';
+import { Meal, MealType } from '../weekPeek/types';
 
 export interface SelectedMeal {
   date: number;

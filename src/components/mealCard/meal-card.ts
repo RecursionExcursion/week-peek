@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
-import { Meal, Meals } from '../../weekPeek/types';
-import { MealSelectionService, MealType } from '../../injectors/meal-selection';
+import { MealClass, Day, MealType } from '../../weekPeek/types';
+import { MealSelectionService } from '../../injectors/meal-selection';
 
 @Component({
   selector: 'meal-card',
@@ -9,22 +9,21 @@ import { MealSelectionService, MealType } from '../../injectors/meal-selection';
 })
 export class MealCard {
   date = input.required<number>();
-  meals = input.required<Meals | undefined>();
-  readonly fm = computed(() => {
-    const meals = this.meals();
-
+  day = input.required<Day | undefined>();
+  readonly formattedMeals = computed(() => {
+    const day = this.day();
     return {
       breakfast: {
         title: 'Breakfast',
-        meals: meals?.breakfast ?? [],
+        meal: day?.meals?.['breakfast'] ?? MealClass.newMeal(),
       },
       lunch: {
         title: 'Lunch',
-        meals: meals?.lunch ?? [],
+        meal: day?.meals?.['lunch'] ?? MealClass.newMeal(),
       },
       dinner: {
         title: 'Dinner',
-        meals: meals?.dinner ?? [],
+        meal: day?.meals?.['dinner'] ?? MealClass.newMeal(),
       },
     };
   });
@@ -32,11 +31,11 @@ export class MealCard {
   constructor(private mealService: MealSelectionService) {}
 
   select(mealType: MealType) {
-    const meal = this.fm()[mealType];
+    const fm = this.formattedMeals()[mealType];
     this.mealService.select({
       date: this.date(),
       type: mealType,
-      meal: meal.meals,
+      meal: fm.meal,
     });
   }
 }

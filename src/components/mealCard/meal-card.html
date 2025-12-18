@@ -46,27 +46,21 @@
 
 <div class="meal-container">
   <div class="meal-wrapper" (click)="select(`breakfast`)">
-    <span class="title">
-      🥞 {{ fm().breakfast.title }}
-    </span>
+    <span class="title"> 🥞 {{ formattedMeals().breakfast.title }} </span>
     <div class="meals">
-      {{ fm().breakfast.meals }}
+      {{ formattedMeals().breakfast.meal.items }}
     </div>
   </div>
   <div class="meal-wrapper" (click)="select(`lunch`)">
-    <span class="title">
-      🥗 {{ fm().lunch.title }}
-    </span>
+    <span class="title"> 🥗 {{ formattedMeals().lunch.title }} </span>
     <div class="meals">
-      {{ fm().lunch.meals }}
+      {{ formattedMeals().lunch.meal.items }}
     </div>
   </div>
   <div class="meal-wrapper" (click)="select(`dinner`)">
-    <span class="title">
-      🍽️ {{ fm().dinner.title }}
-    </span>
+    <span class="title"> 🍽️ {{ formattedMeals().dinner.title }} </span>
     <div class="meals">
-      {{ fm().dinner.meals }}
+      {{ formattedMeals().dinner.meal.items }}
     </div>
   </div>
 </div>

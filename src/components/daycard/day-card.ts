@@ -16,8 +16,8 @@ export class DayCard {
     return new Date(this.week()![0]).toLocaleDateString();
   }
 
-  getMeals() {
-    return this.week()![1]?.meals ?? undefined;
+  getDay() {
+    return this.week()![1] ?? undefined;
   }
 
   getRawDate() {

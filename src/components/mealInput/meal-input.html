@@ -1,11 +1,44 @@
 <style>
-    input {
-        border: 2px solid black;
-    }
-</style>
+  .input-wrapper {
+    border: 2px solid black;
+    display: flex;
+  }
 
+  .input-wrapper input {
+    display: flex;
+    flex-grow: 1;
+  }
+
+  #type-ahead {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ccc;
+    max-width: 200px;
+  }
+
+  #type-ahead li {
+    padding: 6px;
+    cursor: pointer;
+  }
+
+  #type-ahead li:hover {
+    background-color: #eee;
+  }
+</style>
 
 <div>
   Meal-Input
-  <input />
+  <div class="flex flex-col m-auto px-20">
+    <div class="input-wrapper">
+      <input type="text" [formControl]="searchCtrl" />
+      <button class="action-button" title="Add" (click)="onAdd()">
+        <circle-plus-icon [height]="iconSize" [width]="iconSize" />
+      </button>
+      <button class="action-button" title="Save" (click)="onSave()">
+        <save-icon [height]="iconSize" [width]="iconSize" />
+      </button>
+    </div>
+    <ul id="type-ahead"></ul>
+  </div>
 </div>

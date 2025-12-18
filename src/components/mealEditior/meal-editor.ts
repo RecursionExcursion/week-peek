@@ -1,5 +1,5 @@
-import { Component, computed, input, output, signal } from '@angular/core';
-import { MealSelectionService, SelectedMeal } from '../../injectors/meal-selection';
+import { Component, computed, output, signal } from '@angular/core';
+import { MealSelectionService } from '../../injectors/meal-selection';
 import { PenIcon } from '../icons/pen-icon';
 import { XIcon } from '../icons/x-icon';
 import { SaveIcon } from '../icons/save-icon';
@@ -23,7 +23,10 @@ export class MealEditor {
     const mealServ = this.selectedMeal();
     if (!mealServ) return [];
     const meals = mealServ.meal;
-    return meals;
+
+    console.log({ meals });
+
+    return meals.items;
   });
   date = computed(() => {
     const mealServ = this.selectedMeal();

@@ -45,6 +45,24 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.action-button {
+  background: #ffe0b2;
+  border: 2px solid #ffcc80;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  transition: all 0.2s;
+}
+
+.action-button:hover {
+  background: #ffcc80;
+  transform: scale(1.1);
 }

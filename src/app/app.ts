@@ -8,7 +8,7 @@ import { MealEditor } from '../components/mealEditior/meal-editor';
 import { DuckIcon } from '../components/decorations/duck-icon';
 import { BubbleIcon } from '../components/decorations/bubble-icon';
 import { userService } from '../service/user-service';
-import { User } from '../weekPeek/types';
+import { User, UserClass } from '../weekPeek/types';
 import { UserContext } from '../injectors/user-context';
 
 @Component({
@@ -30,7 +30,7 @@ export class App {
   constructor(protected mealService: MealSelectionService, protected userContext: UserContext) {
     effect(() => {
       userService.getUser('').then((usr) => {
-        const user = usr ?? new User();
+        const user = usr ?? UserClass.newUser();
         this.user.set(user);
         this.week.set(getWeek(user, this.date()));
         this.userContext.set(user);

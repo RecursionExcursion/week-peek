@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DayCard } from '../components/daycard/day-card';
+import { DayCard } from '../components/dayCard/day-card';
 import { mockUser } from '../weekPeek/mock';
 import { getWeek } from '../weekPeek/util';
 import { BigArrowRight } from '../components/icons/big-arrow-right-icon';

@@ -93,9 +93,11 @@
         </button>
       </div>
     </div>
+    } @if (showAddMeal()){
+    <meal-input />
     }
     <div class="text-center">
-      <button class="add-button cursor-pointer">
+      <button (click)="showAddMeal.set(!showAddMeal())" class="add-button cursor-pointer">
         <add-icon /> Add Meal
       </button>
     </div>

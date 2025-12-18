@@ -7,7 +7,8 @@ class LocalUserService implements IWeekPeekService {
   async getUser(id: string) {
     try {
       const usr = await this.zipStore.get('user');
-      return id === usr?.id ? usr : null;
+      // return id === usr?.id ? usr : null;
+      return usr ?? null;
     } catch (err) {
       console.error(err);
       return null;

@@ -1,19 +1,21 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { MealSelectionService, SelectedMeal } from '../../injectors/meal-selection';
 import { PenIcon } from '../icons/pen-icon';
 import { XIcon } from '../icons/x-icon';
 import { SaveIcon } from '../icons/save-icon';
 import { AddIcon } from '../icons/add-icon';
+import { MealInput } from '../mealInput/meal-input';
 
 @Component({
   selector: 'meal-editor',
   standalone: true,
   templateUrl: './meal-editor.html',
-  imports: [PenIcon, XIcon, SaveIcon, AddIcon],
+  imports: [PenIcon, XIcon, SaveIcon, AddIcon, MealInput],
 })
 export class MealEditor {
   close = output<void>();
   iconSize = 18;
+  showAddMeal = signal<boolean>(false);
 
   readonly selectedMeal = computed(() => this.mealService.selectedMeal());
 

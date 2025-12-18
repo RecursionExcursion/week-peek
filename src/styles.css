@@ -1,24 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Caveat:wght@400;500;600;700&family=Comic+Neue:wght@300;400;700&display=swap');
 
 @theme {
   /* Backgrounds */
-  --color-background: #f7f9fc; /* soft off-white */
+  --color-background: #fffef7; /* warm off-white */
   --color-card: #ffffff; /* card background */
 
-  /* Accents */
-  --color-primary: #9fd4d2; /* soft blue */
-  --color-secondary: #34c759; /* healthy green */
+  /* Accents - playful pastels */
+  --color-primary: #ffd6cc; /* soft peach */
+  --color-secondary: #c8e6c9; /* soft mint green */
+  --color-accent: #ffe0b2; /* warm yellow */
+  --color-bubble: #e1f5fe; /* sky blue */
 
   /* Text */
-  --color-text-primary: #1f2937; /* near-black */
-  --color-text-secondary: #6b7280; /* muted gray */
+  --color-text-primary: #2c2c2c; /* soft black */
+  --color-text-secondary: #757575; /* muted gray */
 
   /* UI */
-  --color-divider: #e5e7eb; /* subtle borders */
+  --color-divider: #f0f0f0; /* very subtle borders */
+}
+
+* {
+  font-family: 'Comic Neue', cursive;
 }
 
 .card {
-  @apply bg-card rounded-lg border-divider border;
+  @apply bg-card rounded-xl border-divider border-2 shadow-sm;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.title-font {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+}
+
+.handwriting-font {
+  font-family: 'Kalam', cursive;
+}
+
+.bubble {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }

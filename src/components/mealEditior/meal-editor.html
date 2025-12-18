@@ -1,28 +1,102 @@
-<div class="text-center card">
-  <div class="flex justify-end pr-5 pt-1">
-    <button class="cursor-pointer font-bold" (click)="close.emit()"><x-icon /></button>
+<style>
+  .editor-header {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2c2c2c;
+    padding: 1.5rem 0;
+    background: linear-gradient(135deg, #c8e6c9 0%, #ffe0b2 100%);
+    border-radius: 0.75rem 0.75rem 0 0;
+  }
+
+  .close-button {
+    background: #ffd6cc;
+    border: 2px solid #ffcc80;
+    border-radius: 50%;
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0.5rem;
+  }
+
+  .close-button:hover {
+    background: #ffcc80;
+    transform: scale(1.1);
+  }
+
+  .meal-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: #fffef7;
+    border: 2px dashed #c8e6c9;
+    border-radius: 0.5rem;
+    font-family: 'Comic Neue', cursive;
+    font-size: 1.1rem;
+    color: #2c2c2c;
+  }
+
+  .action-button {
+    background: #ffe0b2;
+    border: 2px solid #ffcc80;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    transition: all 0.2s;
+  }
+
+  .action-button:hover {
+    background: #ffcc80;
+    transform: scale(1.1);
+  }
+
+  .add-button {
+    background: #c8e6c9;
+    border: 2px dashed #81c784;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-top: 1rem;
+    transition: all 0.2s;
+    font-family: 'Kalam', cursive;
+    font-size: 1.1rem;
+    color: #2c2c2c;
+  }
+
+  .add-button:hover {
+    background: #a5d6a7;
+    border-color: #66bb6a;
+    transform: scale(1.05);
+  }
+</style>
+
+<div class="text-center card max-w-2xl mx-auto">
+  <div class="flex justify-end pr-6 pt-4 pb-2">
+    <button class="close-button cursor-pointer" (click)="close.emit()" title="Close">
+      <x-icon />
+    </button>
   </div>
-  <div class="font-bold text-2xl pt-5">{{ type() }} on {{ date() }}</div>
-  <div class="pt-5">
+  <div class="editor-header">{{ type() }} on {{ date() }}</div>
+  <div class="pt-5 px-6 pb-6">
     @for(m of meals(); track m){
-    <div class="flex justify-around">
-      {{ m }}
+    <div class="meal-item flex justify-between items-center">
+      <span>{{ m }}</span>
       <div class="flex gap-2">
-        <button>
+        <button class="action-button" title="Edit">
           <pen-icon [height]="iconSize" [width]="iconSize" />
         </button>
-        <button>
+        <button class="action-button" title="Delete">
           <x-icon [height]="iconSize" [width]="iconSize" />
         </button>
-        <button>
+        <button class="action-button" title="Save">
           <save-icon [height]="iconSize" [width]="iconSize" />
         </button>
       </div>
     </div>
     }
-    <div>
-      <button class="text-secondary">
-        <add-icon />
+    <div class="text-center">
+      <button class="add-button cursor-pointer">
+        <add-icon /> Add Meal
       </button>
     </div>
   </div>

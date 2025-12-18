@@ -1,31 +1,112 @@
 <style>
   h1 {
-    font-size: 3rem;
+    font-size: 4rem;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    color: #2c2c2c;
+    text-shadow: 2px 2px 0px rgba(255, 214, 204, 0.5);
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-family: 'Kalam', cursive;
+    font-size: 1.2rem;
+    color: #757575;
+    font-style: italic;
+    margin-bottom: 2rem;
   }
 
   button {
     cursor: pointer;
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
+    background: #ffe0b2;
+    border: 2px solid #ffcc80;
+    border-radius: 50%;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  button:hover {
+    background: #ffcc80;
+    transform: scale(1.1);
+  }
+
+  .bubbles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .bubble-1 {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .bubble-2 {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    animation: float 5s ease-in-out infinite 0.5s;
+  }
+
+  .bubble-3 {
+    position: absolute;
+    top: 5%;
+    right: 30%;
+    animation: float 3.5s ease-in-out infinite 1s;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-15px) rotate(5deg);
+    }
   }
 </style>
 
-<main class="p-8 bg-background min-h-screen text-text-primary">
-  <h1 class="text-center">{{ title }}</h1>
+<main class="p-8 bg-background min-h-screen text-text-primary relative">
+  <div class="bubbles-container">
+    <div class="bubble-1">
+      <bubble-icon [size]="50" [radius]="25" />
+    </div>
+    <div class="bubble-2">
+      <bubble-icon [size]="35" [radius]="17" />
+    </div>
+    <div class="bubble-3">
+      <bubble-icon [size]="40" [radius]="20" />
+    </div>
+  </div>
+  <div class="text-center mb-6">
+    <h1>{{ title }}</h1>
+  </div>
 
   @if (mealService.selectedMeal(); as meal) {
   <meal-editor (close)="clearMeal()" />
   } @else {
-  <div class="flex justify-around">
-    <button class="rotate-180" (click)="weekBackward()">
+  <div class="flex justify-center items-center gap-8 mb-6">
+    <button class="rotate-180" (click)="weekBackward()" title="Previous Week">
       <big-arrow-right [height]="buttonSize" [width]="buttonSize" />
     </button>
-    <button (click)="weekForward()">
+    <duck-icon />
+    <p class="subtitle">For the Week of {{ getWeekLabel() }}</p>
+    <button (click)="weekForward()" title="Next Week">
       <big-arrow-right [height]="buttonSize" [width]="buttonSize" />
     </button>
   </div>
 
-  <div class="flex flex-col rounded-xl gap-2">
+  <div class="flex flex-col rounded-xl gap-4 max-w-4xl mx-auto">
     @for (day of week(); track day[0]){
     <day-card [week]="day"></day-card>
     }

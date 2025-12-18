@@ -1,15 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DayCard } from '../components/dayCard/day-card';
+import { DayCard } from '../components/daycard/day-card';
 import { mockUser } from '../weekPeek/mock';
 import { getWeek } from '../weekPeek/util';
 import { BigArrowRight } from '../components/icons/big-arrow-right-icon';
 import { MealSelectionService } from '../injectors/meal-selection';
 import { MealEditor } from '../components/mealEditior/meal-editor';
+import { DuckIcon } from '../components/decorations/duck-icon';
+import { BubbleIcon } from '../components/decorations/bubble-icon';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, DayCard, BigArrowRight, MealEditor],
+  imports: [RouterOutlet, DayCard, BigArrowRight, MealEditor, DuckIcon, BubbleIcon],
   templateUrl: './app.html',
   styleUrl: './app.css',
   providers: [MealSelectionService],
@@ -44,5 +46,11 @@ export class App {
 
   clearMeal() {
     this.mealService.clear();
+  }
+
+  getWeekLabel() {
+    const startDate = new Date(this.date());
+    startDate.setDate(startDate.getDate() - startDate.getDay()); // Get Sunday of the week
+    return startDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   }
 }

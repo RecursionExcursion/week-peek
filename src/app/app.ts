@@ -1,4 +1,4 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DayCard } from '../components/dayCard/day-card';
 import { ClientWeek, getWeek } from '../weekPeek/util';
@@ -25,14 +25,19 @@ export class App {
   protected readonly date = signal(new Date(Date.now()));
   protected readonly buttonSize = 30;
 
-  week = signal<ClientWeek | undefined>(undefined);
+  week = computed(() => {
+    const usr = this.userContext.user();
+    if (usr) {
+      return getWeek(usr, this.date());
+    }
+    return [];
+  });
 
   constructor(protected mealService: MealSelectionService, protected userContext: UserContext) {
     effect(() => {
       userService.getUser('').then((usr) => {
         const user = usr ?? UserClass.newUser();
         this.user.set(user);
-        this.week.set(getWeek(user, this.date()));
         this.userContext.set(user);
       });
     });
@@ -43,7 +48,6 @@ export class App {
       const newDate = new Date(this.date());
       newDate.setDate(newDate.getDate() + days);
       this.date.set(newDate);
-      this.week.set(getWeek(this.user()!, newDate));
     }
   }
 
@@ -57,7 +61,7 @@ export class App {
 
   getWeekLabel() {
     const startDate = new Date(this.date());
-    startDate.setDate(startDate.getDate() - startDate.getDay()); // Get Sunday of the week
+    startDate.setDate(startDate.getDate() - startDate.getDay());
     return startDate.toLocaleDateString('en-US', {
       month: 'long',
       day: 'numeric',

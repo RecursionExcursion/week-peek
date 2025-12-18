@@ -5,6 +5,8 @@ import { XIcon } from '../icons/x-icon';
 import { SaveIcon } from '../icons/save-icon';
 import { AddIcon } from '../icons/add-icon';
 import { MealInput } from '../mealInput/meal-input';
+import { Item } from '../../weekPeek/types';
+import { UserContext } from '../../injectors/user-context';
 
 @Component({
   selector: 'meal-editor',
@@ -20,13 +22,16 @@ export class MealEditor {
   readonly selectedMeal = computed(() => this.mealService.selectedMeal());
 
   meals = computed(() => {
-    const mealServ = this.selectedMeal();
-    if (!mealServ) return [];
-    const meals = mealServ.meal;
+    const user = this.userContext.user();
+    const sel = this.mealService.selectedMeal();
+    if (!user || !sel) return [];
 
-    console.log({ meals });
+    // const meals = mealServ.meal;
+    // console.log({ meals });
+    // return meals.items;
+    if (!user || !sel) return [];
 
-    return meals.items;
+    return user.days[sel.date]?.meals[sel.type]?.items ?? [];
   });
   date = computed(() => {
     const mealServ = this.selectedMeal();
@@ -40,5 +45,9 @@ export class MealEditor {
     return t[0].toUpperCase() + t.slice(1).toLowerCase();
   });
 
-  constructor(protected mealService: MealSelectionService) {}
+  constructor(protected mealService: MealSelectionService, protected userContext: UserContext) {}
+
+  onDelete(item: Item) {
+    this.userContext.deleteMealItem(item.id);
+  }
 }

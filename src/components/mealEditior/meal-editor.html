@@ -65,14 +65,14 @@
   </div>
   <div class="editor-header">{{ type() }} on {{ date() }}</div>
   <div class="pt-5 px-6 pb-6">
-    @for(m of meals(); track m){
+    @for(item of meals(); track item.id){
     <div class="meal-item flex justify-between items-center">
-      <span>{{ m }}</span>
+      <span>{{ item.name }}</span>
       <div class="flex gap-2">
         <button class="action-button" title="Edit">
           <pen-icon [height]="iconSize" [width]="iconSize" />
         </button>
-        <button class="action-button" title="Delete">
+        <button class="action-button" title="Delete" (click)="onDelete(item)">
           <x-icon [height]="iconSize" [width]="iconSize" />
         </button>
         <button class="action-button" title="Save">

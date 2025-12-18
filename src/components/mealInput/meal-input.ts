@@ -18,8 +18,6 @@ export class MealInput {
   iconSize = 20;
 
   ngOnInit() {
-    //TODO
-    console.log(this.userContext.user());
     this.searchCtrl.valueChanges.subscribe(async (value) => {
       console.log(value);
     });
@@ -33,17 +31,7 @@ export class MealInput {
 
       if (usr && mealService && newMeal) {
         const { date, type } = mealService;
-
-        let day = usr.days[date];
-
-        if (!day) {
-          day = DayClass.newDay();
-        }
-        DayClass.addMeal(day, type, newMeal);
-
-        usr.days[date] = day;
-
-        this.userContext.saveUser(usr);
+        this.userContext.addMealItem(date, type, newMeal);
         this.searchCtrl.setValue('');
       }
     } catch (err) {
@@ -52,6 +40,6 @@ export class MealInput {
   }
 
   onSave() {
-    console.log('Saaved: ', this.searchCtrl.value);
+    console.log('Saved: ', this.searchCtrl.value);
   }
 }

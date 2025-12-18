@@ -1,6 +1,7 @@
 import { Component, computed, input } from '@angular/core';
-import { MealClass, Day, MealType } from '../../weekPeek/types';
+import { MealType } from '../../weekPeek/types';
 import { MealSelectionService } from '../../injectors/meal-selection';
+import { ClientDay } from '../../weekPeek/util';
 
 @Component({
   selector: 'meal-card',
@@ -8,22 +9,28 @@ import { MealSelectionService } from '../../injectors/meal-selection';
   templateUrl: './meal-card.html',
 })
 export class MealCard {
-  date = input.required<number>();
-  day = input.required<Day | undefined>();
+  cd = input.required<ClientDay>();
+
   readonly formattedMeals = computed(() => {
-    const day = this.day();
+    const mapToItems = (type: string) => {
+      const day = this.cd()[1];
+      const meal = day?.meals?.[type];
+      const itemStrings = meal?.items.map((itm) => itm.name) ?? [];
+      return itemStrings;
+    };
+
     return {
       breakfast: {
         title: 'Breakfast',
-        meal: day?.meals?.['breakfast'] ?? MealClass.newMeal(),
+        meal: mapToItems('breakfast'),
       },
       lunch: {
         title: 'Lunch',
-        meal: day?.meals?.['lunch'] ?? MealClass.newMeal(),
+        meal: mapToItems('lunch'),
       },
       dinner: {
         title: 'Dinner',
-        meal: day?.meals?.['dinner'] ?? MealClass.newMeal(),
+        meal: mapToItems('dinner'),
       },
     };
   });
@@ -31,11 +38,13 @@ export class MealCard {
   constructor(private mealService: MealSelectionService) {}
 
   select(mealType: MealType) {
-    const fm = this.formattedMeals()[mealType];
-    this.mealService.select({
-      date: this.date(),
-      type: mealType,
-      meal: fm.meal,
-    });
+    const [date, day] = this.cd();
+    if (day) {
+      this.mealService.select({
+        date: date,
+        type: mealType,
+        meal: day.meals[mealType],
+      });
+    }
   }
 }

@@ -1,14 +1,14 @@
 import { Injectable, signal } from '@angular/core';
-import { User } from '../weekPeek/types';
-import { IWeekPeekService } from '../weekPeek/week-peek';
+import { DayClass, ItemClass, MealType, User } from '../weekPeek/types';
 import { userService } from '../service/user-service';
 
 @Injectable()
-export class UserContext implements IWeekPeekService {
+export class UserContext {
   user = signal<User | null>(null);
 
-  set(sm: User) {
-    this.user.set(sm);
+  set(usr: User) {
+    console.log('Setting User: ', usr);
+    this.user.set(usr);
   }
 
   clear() {
@@ -20,12 +20,10 @@ export class UserContext implements IWeekPeekService {
   }
 
   async saveUser(usr: User) {
-    console.log('Saving');
-
     try {
       const res = await userService.saveUser(usr);
       if (res) {
-        this.update((oldUser) => (oldUser = usr));
+        this.user.set(structuredClone(usr));
       }
       return true;
     } catch (err) {
@@ -33,11 +31,42 @@ export class UserContext implements IWeekPeekService {
     }
   }
 
-  update(mutator: (user: User) => void) {
-    const current = this.user();
-    if (!current) return;
-    const copy = structuredClone(current); 
-    mutator(copy);
-    this.user.set(copy);
+  addMealItem(date: number, type: MealType, item: string) {
+    const usr = this.user();
+    if (!usr) return;
+    const copy = structuredClone(usr);
+    const day = copy.days[date] ?? DayClass.newDay();
+    DayClass.addMealItem(day, type, ItemClass.newItem(item));
+    copy.days[date] = day;
+    this.saveUser(copy);
+  }
+
+  deleteMealItem(id: string) {
+    const usr = this.user();
+    if (!usr) return;
+    const copy = structuredClone(usr);
+    //Find item and map to params needed
+    const item = Object.entries(copy.days)
+      .flatMap((d) =>
+        Object.entries(d[1].meals).flatMap((m) =>
+          m[1].items.map((i) => {
+            return {
+              date: parseInt(d[0]),
+              type: m[0] as MealType,
+              items: i,
+            };
+          })
+        )
+      )
+      .find((item) => item.items.id === id);
+
+    if (item) {
+      const day = copy.days[item.date];
+      if (day) {
+        DayClass.removeMealItem(day, item.type, item.items.id);
+        copy.days[item.date] = day;
+        this.saveUser(copy);
+      }
+    }
   }
 }

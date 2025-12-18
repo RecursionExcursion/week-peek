@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { ClientDay } from '../../weekPeek/util';
 import { MealCard } from '../mealCard/meal-card';
 
@@ -9,18 +9,8 @@ import { MealCard } from '../mealCard/meal-card';
   imports: [MealCard],
 })
 export class DayCard {
-  week = input.required<ClientDay | undefined>();
-
-  getDate() {
-    if (this.week() === undefined) return '';
-    return new Date(this.week()![0]).toLocaleDateString();
-  }
-
-  getDay() {
-    return this.week()![1] ?? undefined;
-  }
-
-  getRawDate() {
-    return this.week()?.[0] ?? 0;
-  }
+  day = input.required<ClientDay>();
+  date = computed(() => {
+    return new Date(this.day()[0]).toLocaleDateString();
+  });
 }

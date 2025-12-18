@@ -1,4 +1,20 @@
-export type User = {
+export class User implements UserType {
+  id: string = '';
+  username: string = '';
+  password: string = '';
+  days: Days = {};
+  meals: string[] = [];
+  ingredients: string[] = [];
+  saved: {
+    meals: Item[];
+    ingredients: Item[];
+  } = {
+    meals: [],
+    ingredients: [],
+  };
+}
+
+export type UserType = {
   id: string;
   username: string;
   password: string;

@@ -1,9 +1,9 @@
 import { User } from './types';
 
 export interface IWeekPeekService {
-  getUser: (id: string) => Promise<User | undefined>;
+  getUser: (id: string) => Promise<User | null>;
   saveUser: (usr: User) => Promise<boolean>;
-  login?: (un: string, pw: string) => Promise<string | undefined>;
+  login?: (un: string, pw: string) => Promise<string | null>;
 }
 
 export class WeekPeekService {

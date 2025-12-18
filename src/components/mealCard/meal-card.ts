@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { MealType } from '../../weekPeek/types';
+import { DayClass, MealType } from '../../weekPeek/types';
 import { MealSelectionService } from '../../injectors/meal-selection';
 import { ClientDay } from '../../weekPeek/util';
 
@@ -38,7 +38,8 @@ export class MealCard {
   constructor(private mealService: MealSelectionService) {}
 
   select(mealType: MealType) {
-    const [date, day] = this.cd();
+    const [date, day = DayClass.newDay()] = this.cd();
+
     if (day) {
       this.mealService.select({
         date: date,

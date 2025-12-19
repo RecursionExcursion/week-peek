@@ -67,6 +67,24 @@ export class UserClass {
         if (!day) return;
         day.meals[mealType] = meal;
       },
+      item: (date: number, mealType: MealType, item: Item) => {
+        const day = user.days[date];
+        if (!day) return;
+        let meal = day.meals[mealType];
+        if (!meal) {
+          meal = {
+            items: [],
+          };
+        }
+
+        const idx = meal.items.findIndex((itm) => itm.id === item.id);
+
+        if (idx === -1) {
+          meal.items.push(item);
+        } else {
+          meal.items[idx] = item;
+        }
+      },
     };
   };
 }

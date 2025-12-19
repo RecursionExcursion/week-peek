@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { DayClass, ItemClass, MealType, User } from '../weekPeek/types';
+import { DayClass, Item, ItemClass, MealType, User, UserClass } from '../weekPeek/types';
 import { userService } from '../service/user-service';
 
 @Injectable()
@@ -7,7 +7,6 @@ export class UserContext {
   user = signal<User | null>(null);
 
   set(usr: User) {
-    console.log('Setting User: ', usr);
     this.user.set(usr);
   }
 
@@ -38,6 +37,14 @@ export class UserContext {
     const day = copy.days[date] ?? DayClass.newDay();
     DayClass.addMealItem(day, type, ItemClass.newItem(item));
     copy.days[date] = day;
+    this.saveUser(copy);
+  }
+  
+  updateMealItem(args: { date: number; item: Item; mealType: MealType }) {
+    const usr = this.user();
+    if (!usr) return;
+    const copy = structuredClone(usr);
+    UserClass.set(copy).item(args.date, args.mealType, args.item);
     this.saveUser(copy);
   }
 

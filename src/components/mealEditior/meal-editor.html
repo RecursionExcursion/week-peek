@@ -55,6 +55,11 @@
     border-color: #66bb6a;
     transform: scale(1.05);
   }
+
+  .button-row {
+    display: flex;
+    gap: 0.5rem;
+  }
 </style>
 
 <div class="text-center card max-w-2xl mx-auto">
@@ -67,17 +72,34 @@
   <div class="pt-5 px-6 pb-6">
     @for(item of meals(); track item.id){
     <div class="meal-item flex justify-between items-center">
+      @if (formMode()){
+      <input [formControl]="editCtrl" [value]="item.name" (input)="onInput($event.target)" />
+      } @else {
       <span>{{ item.name }}</span>
+      }
       <div class="flex gap-2">
-        <button class="action-button" title="Edit">
-          <pen-icon [height]="iconSize" [width]="iconSize" />
-        </button>
-        <button class="action-button" title="Delete" (click)="onDelete(item)">
-          <x-icon [height]="iconSize" [width]="iconSize" />
-        </button>
-        <button class="action-button" title="Save">
-          <save-icon [height]="iconSize" [width]="iconSize" />
-        </button>
+        @if (formMode()){
+        <div class="button-row">
+          <button class="action-button" title="Confirm Changes" (click)="onConfirmEdit(item)">
+            <check-icon [height]="iconSize" [width]="iconSize" />
+          </button>
+          <button class="action-button" title="Exit" (click)="formMode.set(false)">
+            <x-icon [height]="iconSize" [width]="iconSize" />
+          </button>
+        </div>
+        } @else {
+        <div class="button-row">
+          <button class="action-button" title="Edit" (click)="setForm(item)">
+            <pen-icon [height]="iconSize" [width]="iconSize" />
+          </button>
+          <button class="action-button" title="Save">
+            <save-icon [height]="iconSize" [width]="iconSize" />
+          </button>
+          <button class="action-button" title="Delete" (click)="onDelete(item)">
+            <delete-icon [height]="iconSize" [width]="iconSize" />
+          </button>
+        </div>
+        }
       </div>
     </div>
     } @if (showAddMeal()){

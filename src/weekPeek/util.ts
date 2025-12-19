@@ -36,8 +36,6 @@ export function getWeek(user: User, now: Date) {
     });
   });
 
-  console.log({ newWeek });
-
   return newWeek;
 }
 

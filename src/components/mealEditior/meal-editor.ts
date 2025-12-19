@@ -7,30 +7,43 @@ import { AddIcon } from '../icons/add-icon';
 import { MealInput } from '../mealInput/meal-input';
 import { Item } from '../../weekPeek/types';
 import { UserContext } from '../../injectors/user-context';
+import { DeleteIcon } from '../icons/delete-icon';
+import { CheckIcon } from '../icons/check-icon';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'meal-editor',
   standalone: true,
   templateUrl: './meal-editor.html',
-  imports: [PenIcon, XIcon, SaveIcon, AddIcon, MealInput],
+  imports: [
+    PenIcon,
+    XIcon,
+    SaveIcon,
+    AddIcon,
+    MealInput,
+    DeleteIcon,
+    CheckIcon,
+    ReactiveFormsModule,
+  ],
 })
 export class MealEditor {
+  formMode = signal(false);
+  editCtrl = new FormControl('');
+
   close = output<void>();
   iconSize = 18;
-  showAddMeal = signal<boolean>(false);
+  showAddMeal = signal(false);
 
   readonly selectedMeal = computed(() => this.mealService.selectedMeal());
+
+  onInput(el: HTMLInputElement) {
+    console.log(el.value);
+  }
 
   meals = computed(() => {
     const user = this.userContext.user();
     const sel = this.mealService.selectedMeal();
     if (!user || !sel) return [];
-
-    // const meals = mealServ.meal;
-    // console.log({ meals });
-    // return meals.items;
-    if (!user || !sel) return [];
-
     return user.days[sel.date]?.meals[sel.type]?.items ?? [];
   });
   date = computed(() => {
@@ -47,7 +60,21 @@ export class MealEditor {
 
   constructor(protected mealService: MealSelectionService, protected userContext: UserContext) {}
 
+  setForm(item: Item) {
+    this.editCtrl.setValue(item.name);
+    this.formMode.set(true);
+  }
+
   onDelete(item: Item) {
     this.userContext.deleteMealItem(item.id);
+  }
+
+  onConfirmEdit(item: Item) {
+    const serv = this.mealService.selectedMeal();
+    const newVal = this.editCtrl.value;
+    if (!serv || !newVal) return;
+    const itemCopy = { ...item };
+    itemCopy.name = newVal;
+    this.userContext.updateMealItem({ item: itemCopy, date: serv.date, mealType: serv.type });
   }
 }
